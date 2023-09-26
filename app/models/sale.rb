@@ -1,11 +1,16 @@
 class Sale < ApplicationRecord
-  monetize :price_cents, numericality: true
-  mount_uploader :image, ProductImageUploader
 
-  belongs_to :category
+  def finished? 
+    ends_on < Date.current 
+  end
 
-  validates :name, presence: true
-  validates :price, presence: true
-  validates :quantity, presence: true
-  validates :category, presence: true
+  def upcoming? 
+    starts_on > Date.current
+  end
+
+  def active?
+    !finished? && !upcoming?
+  end
+
+
 end
