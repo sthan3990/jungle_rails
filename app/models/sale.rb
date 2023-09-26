@@ -1,5 +1,11 @@
 class Sale < ApplicationRecord
 
+  # Active record scope 
+  def.self.active 
+    where("sales.starts_on <= ? AND sales.end_on >= ?", Date.current, Date.current).any?
+    end
+  end
+
   def finished? 
     ends_on < Date.current 
   end
@@ -11,6 +17,5 @@ class Sale < ApplicationRecord
   def active?
     !finished? && !upcoming?
   end
-
 
 end
